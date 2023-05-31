@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class User(AbstractUser):
     is_doctor = models.BooleanField(default=False)
     is_patient = models.BooleanField(default=False)
-
+    
 
 
 

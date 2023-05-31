@@ -1,12 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Doctor Dashboard</title>
-    <style>
-        /* Add your CSS styling here */
-    </style>
+      <!--Custom CSS file-->
+      <link rel="stylesheet" href="{% static 'app/css/ddashboard.css' %}">
+    
 </head>
 <body>
+
+    {% csrf_token %}
+
     <h2>Welcome, {{ doctor.doctor_name }}!</h2>
     <h3>Patients:</h3>
     <ul>
@@ -16,6 +20,31 @@
             <li>No patients assigned.</li>
         {% endfor %}
     </ul>
-    <a href="{% url 'doctor_logout' %}">Logout</a>
+
+    <div class="container">
+        <h2>Doctor Dashboard</h2>
+        <ul>
+            {% for prescription in prescriptions %}
+            <li>
+                <div class="prescription">
+                    <div class="patient-name">{{ prescription.patient_name }}</div>
+                    <div class="health-problem">{{ prescription.health_problem }}</div>
+                    <div class="medication">{{ prescription.medication }}</div>
+                    <div class="instructions">{{ prescription.instructions }}</div>
+                </div>
+            </li>
+            {% empty %}
+            <li>No prescriptions found</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <a class = 'button' href="{% url 'prescription' %}">Prescribe</a>
+    <a class = 'button' href="{% url 'doctor_logout' %}">Logout</a>
+
+
+
+
 </body>
 </html>

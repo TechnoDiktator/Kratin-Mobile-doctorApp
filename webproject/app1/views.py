@@ -5,9 +5,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from datetime import date, timedelta
+from .models import User , Prescription , Patient , Doctor
 
 # Create your views here.
 
+
+from .models import Prescription
 
 
 def home(request):
@@ -28,32 +31,48 @@ def doctor_register(request):
         Doctor.objects.create(user=user, doctor_name=doctor_name, email=email)
 
         messages.success(request, 'Doctor registered successfully!')
-        return redirect('app1/doctor_login')
+        return redirect('doctor_login')
 
     return render(request, 'app1/doctor_register.html')
 
 
 def doctor_login(request):
+    print("Trying to log in as doctor")
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+        
+        print("Authenticating")
         user = authenticate(request, username=username, password=password)
 
         if user and user.is_doctor:
+            print("user is a doctor")
             login(request, user)
-            return redirect('app1/doctor_dashboard')
+            return render( request ,  'app1/doctor_dashboard.html'  )
         else:
             messages.error(request, 'Invalid credentials or you are not a doctor.')
 
     return render(request, 'app1/doctor_login.html')
 
 
-@login_required(login_url='app1/doctor_login')
+@login_required(login_url='doctor_login')
 def doctor_dashboard(request):
-    doctor = request.user.doctor
-    patients = doctor.patient_set.all()
-    context = {'doctor': doctor, 'patients': patients}
-    return render(request, 'app1/doctor_dashboard.html', context)
+    if request.user.is_authenticated and request.user.is_doctor:
+        doctor = request.user
+        prescriptions = Prescription.objects.filter(doctor=doctor)
+
+        context = {
+            'prescriptions': prescriptions
+        }
+        return render(request, 'app1/doctor_dashboard.html', context)
+    else:
+        return redirect('doctor_login') 
+    
+    #patients = doctor.patient_set.all()
+    #context = {'doctor': doctor, 'patients': patients}
+    #return render(request, 'app1/doctor_dashboard.html', context)
+
+
 
 
 def patient_register(request):
@@ -69,9 +88,9 @@ def patient_register(request):
         Patient.objects.create(user=user, name=name, age=age, gender=gender, email=email)
 
         messages.success(request, 'Patient registered successfully!')
-        return redirect('app1/patient_login')
+        return redirect('patient_login')
 
-    return render(request, 'patient_register.html')
+    return render(request, 'app1/patient_register.html')
 
 
 def patient_login(request):
@@ -79,17 +98,20 @@ def patient_login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-
+        
+        print(user.is_patient)
+        print("trying to log in")
         if user and user.is_patient:
+            print("user is patient")
             login(request, user)
-            return redirect('app1/patient_dashboard')
+            return redirect('patient_dashboard')
         else:
             messages.error(request, 'Invalid credentials or you are not a patient.')
 
     return render(request, 'app1/patient_login.html')
 
 
-@login_required(login_url='app1/patient_login')
+@login_required(login_url='patient_login')
 def patient_dashboard(request):
     patient = request.user.patient
     medications = patient.prescription_set.all()
@@ -126,18 +148,57 @@ def mark_medication(request, prescription_id):
         else:
             messages.error(request, 'Cannot mark medication outside the prescribed dates.')
 
-    return redirect('app1/patient_dashboard')
+    return redirect('patient_dashboard')
 
 
 def doctor_logout(request):
     logout(request)
-    return redirect('app1/doctor_login')
+    return redirect('doctor_login')
 
 
 def patient_logout(request):
     logout(request)
-    return redirect('app1/patient_login')
+    return redirect('patient_login')
 
 
+
+
+###
+#    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+#    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+#    health_problem = models.CharField(max_length=100)
+#    medication = models.CharField(max_length=100)
+#    time_for_medication = models.TimeField()
+#    from_date = models.DateField()
+#    till_date = models.DateField()
+###
+
+def prescription(request):
+    if request.method == 'POST':
+        
+        patient_name = request.POST.get('patient_name')
+        health_problem = request.POST.get('health_problem')
+        medication = request.POST.get('medication')
+        instructions = request.POST.get('instructions')
+        from_date = request.POST.get('from_date')
+        to_date = request.POST.get('to_date')
+        time_for_medication = request.POST.get('time_for_medication')
+
+        prescription = Prescription(
+            patient=patient_name,
+            doctor = request.user,
+            health_problem=health_problem,
+            medication=medication,
+            instructions=instructions,
+            from_date=from_date,
+            till_date=to_date,
+            time_for_medication=time_for_medication
+        )
+        prescription.save()
+        
+
+        return redirect('doctor_dashboard')  
+
+    return render(request, 'app1/prescription.html')
 
 

@@ -1,4 +1,4 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,10 +39,10 @@
 <body>
     <div class="container">
         <h1>Welcome to Patient Tracker</h1>
-        <a href="{% url 'patient/login' %}" class="button">Patient Login</a>
-        <a href="{% url 'doctor/login' %}" class="button">Doctor Login</a>
-        <a href="{% url 'doctor/register' %}" class="button">Doctor Register</a>
-        <a href="{% url 'patient/register' %}" class="button">Patient Register</a>
+        <a href="{% url 'patient_login' %}" class="button">Patient Login</a>
+        <a href="{% url 'doctor_login' %}" class="button">Doctor Login</a>
+        <a href="{% url 'doctor_register' %}" class="button">Doctor Register</a>
+        <a href="{% url 'patient_register' %}" class="button">Patient Register</a>
     </div>
 </body>
 </html>

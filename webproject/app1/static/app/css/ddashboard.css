@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 100px 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 20px;
+}
+
+.prescription {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.patient-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.health-problem {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.medication {
+    margin-bottom: 10px;
+}
+
+.instructions {
+    color: #777;
+    margin-bottom: 10px;
+}
+
+
+
+.button {
+    display: inline-block;
+    padding: 20px 40px;
+    background-color: #333;
+    color: #fff;
+    font-size: 24px;
+    text-decoration: none;
+    margin: 20px;
+    border-radius: 5px;
+}

@@ -1,14 +1,15 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Patient Login</title>
-    <style>
-        /* Add your CSS styling here */
-    </style>
+    <!--Custom CSS file-->
+    <link rel="stylesheet" href="{% static 'app/css/plogin.css' %}">
+    
 </head>
 <body>
     <h2>Patient Login</h2>
-    <form method="post">
+    <form method="post" >
         {% csrf_token %}
         <input type="text" name="username" placeholder="Username" required><br>
         <input type="password" name="password" placeholder="Password" required><br>

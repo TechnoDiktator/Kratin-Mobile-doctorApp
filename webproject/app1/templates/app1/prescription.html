@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prescription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Prescription</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="patient_name">Patient Name</label>
+            <input type="text" name="patient_name" required>
+            
+            <label for="health_problem">Health Problem</label>
+            <input type="text" name="health_problem" required>
+            <label for="medication">Medication</label>
+            <textarea name="medication" rows="5" required></textarea>
+            <label for="instructions">Instructions</label>
+            <textarea name="instructions" rows="5" required></textarea>
+            <label for="from_date">From Date</label>
+            <input type="date" name="from_date" required>
+            <label for="to_date">To Date</label>
+            <input type="date" name="to_date" required>
+            <label for="time_for_medication">Time for Medication</label>
+            <input type="time" name="time_for_medication" required>
+            <button type="submit">Submit Prescription</button>
+        </form>
+    </div>
+</body>
