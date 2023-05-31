@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 20px 40px;
+            background-color: #333;
+            color: #fff;
+            font-size: 24px;
+            text-decoration: none;
+            margin: 20px;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Patient Tracker</h1>
+        <a href="{% url 'patient/login' %}" class="button">Patient Login</a>
+        <a href="{% url 'doctor/login' %}" class="button">Doctor Login</a>
+        <a href="{% url 'doctor/register' %}" class="button">Doctor Register</a>
+        <a href="{% url 'patient/register' %}" class="button">Patient Register</a>
+    </div>
+</body>
+</html>

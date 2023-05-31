@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Dashboard</title>
+    <style>
+        /* Add your CSS styling here */
+    </style>
+</head>
+<body>
+    <h2>Welcome, {{ doctor.doctor_name }}!</h2>
+    <h3>Patients:</h3>
+    <ul>
+        {% for patient in patients %}
+            <li>{{ patient.name }}</li>
+        {% empty %}
+            <li>No patients assigned.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'doctor_logout' %}">Logout</a>
+</body>
+</html>
